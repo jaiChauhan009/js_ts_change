@@ -1,0 +1,541 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.81.0",
+            "commitHash": "eeb90cda1969383f56a2637cbd3037bdf598841c",
+            "commitDate": "2024-09-04",
+            "channel": "Stable",
+            "short": "rustc 1.81.0 (eeb90cda1 2024-09-04)"
+        },
+        "contractCrate": {
+            "name": "gateway",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "dharitri-sc",
+            "version": "0.50.3"
+        }
+    },
+    "name": "Gateway",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "previous_signers_retention",
+                "type": "BigUint"
+            },
+            {
+                "name": "domain_separator",
+                "type": "array32<u8>"
+            },
+            {
+                "name": "minimum_rotation_delay",
+                "type": "u64"
+            },
+            {
+                "name": "operator",
+                "type": "Address"
+            },
+            {
+                "name": "signers",
+                "type": "variadic<WeightedSigners>",
+                "multi_arg": true
+            }
+        ],
+        "outputs": []
+    },
+    "upgradeConstructor": {
+        "inputs": [
+            {
+                "name": "operator",
+                "type": "Address"
+            },
+            {
+                "name": "signers",
+                "type": "variadic<WeightedSigners>",
+                "multi_arg": true
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "docs": [
+                "External Functions"
+            ],
+            "name": "approveMessages",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "messages",
+                    "type": "bytes"
+                },
+                {
+                    "name": "proof",
+                    "type": "Proof"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "rotateSigners",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "new_signers",
+                    "type": "bytes"
+                },
+                {
+                    "name": "proof",
+                    "type": "Proof"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "Public Methods"
+            ],
+            "name": "callContract",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "destination_chain",
+                    "type": "bytes"
+                },
+                {
+                    "name": "destination_contract_address",
+                    "type": "bytes"
+                },
+                {
+                    "name": "payload",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "validateMessage",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "source_chain",
+                    "type": "bytes"
+                },
+                {
+                    "name": "message_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "source_address",
+                    "type": "bytes"
+                },
+                {
+                    "name": "payload_hash",
+                    "type": "array32<u8>"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "isMessageApproved",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "source_chain",
+                    "type": "bytes"
+                },
+                {
+                    "name": "message_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "source_address",
+                    "type": "bytes"
+                },
+                {
+                    "name": "contract_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "payload_hash",
+                    "type": "array32<u8>"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "isMessageExecuted",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "source_chain",
+                    "type": "bytes"
+                },
+                {
+                    "name": "message_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "messages",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "cross_chain_id",
+                    "type": "CrossChainId"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "MessageState"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Integration Functions"
+            ],
+            "name": "validateProof",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "data_hash",
+                    "type": "array32<u8>"
+                },
+                {
+                    "name": "proof",
+                    "type": "Proof"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "timeSinceRotation",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "epoch",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "lastRotationTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "signerHashByEpoch",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "epoch",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "array32<u8>"
+                }
+            ]
+        },
+        {
+            "name": "epochBySignerHash",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "hash",
+                    "type": "array32<u8>"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "@dev Previous signers retention. 0 means only the current signers are valid",
+                "@return The number of epochs to keep the signers valid for signature verification"
+            ],
+            "name": "previousSignersRetention",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "@dev The domain separator for the signer proof",
+                "@return The domain separator for the signer proof"
+            ],
+            "name": "domainSeparator",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "array32<u8>"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "@dev The minimum delay required between rotations",
+                "@return The minimum delay required between rotations"
+            ],
+            "name": "minimumRotationDelay",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "transferOperatorship",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "new_operator",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "operator",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        }
+    ],
+    "events": [
+        {
+            "identifier": "contract_call_event",
+            "inputs": [
+                {
+                    "name": "sender",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "destination_chain",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "destination_contract_address",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "payload_hash",
+                    "type": "array32<u8>",
+                    "indexed": true
+                },
+                {
+                    "name": "payload",
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "identifier": "message_approved_event",
+            "inputs": [
+                {
+                    "name": "source_chain",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "message_id",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "source_address",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "contract_address",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "payload_hash",
+                    "type": "array32<u8>",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "message_executed_event",
+            "inputs": [
+                {
+                    "name": "source_chain",
+                    "type": "bytes",
+                    "indexed": true
+                },
+                {
+                    "name": "message_id",
+                    "type": "bytes",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "signers_rotated_event",
+            "inputs": [
+                {
+                    "name": "epoch",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "signers_hash",
+                    "type": "array32<u8>",
+                    "indexed": true
+                },
+                {
+                    "name": "signers",
+                    "type": "WeightedSigners"
+                }
+            ]
+        },
+        {
+            "identifier": "operatorship_transferred_event",
+            "inputs": [
+                {
+                    "name": "new_operator",
+                    "type": "Address"
+                }
+            ]
+        }
+    ],
+    "dcdtAttributes": [],
+    "hasCallback": false,
+    "types": {
+        "CrossChainId": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "source_chain",
+                    "type": "bytes"
+                },
+                {
+                    "name": "message_id",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "MessageState": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "NonExistent",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Approved",
+                    "discriminant": 1,
+                    "fields": [
+                        {
+                            "name": "0",
+                            "type": "array32<u8>"
+                        }
+                    ]
+                },
+                {
+                    "name": "Executed",
+                    "discriminant": 2
+                }
+            ]
+        },
+        "Proof": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "signers",
+                    "type": "WeightedSigners"
+                },
+                {
+                    "name": "signatures",
+                    "type": "List<Option<array64<u8>>>"
+                }
+            ]
+        },
+        "WeightedSigner": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "signer",
+                    "type": "array32<u8>"
+                },
+                {
+                    "name": "weight",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "WeightedSigners": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "signers",
+                    "type": "List<WeightedSigner>"
+                },
+                {
+                    "name": "threshold",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "nonce",
+                    "type": "array32<u8>"
+                }
+            ]
+        }
+    }
+}

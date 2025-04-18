@@ -1,0 +1,5 @@
+export enum ProviderKeys {
+  AXELAR_GMP_API_CLIENT = 'AXELAR_GMP_API_CLIENT',
+
+  WALLET_SIGNER = 'WALLET_SIGNER',
+}

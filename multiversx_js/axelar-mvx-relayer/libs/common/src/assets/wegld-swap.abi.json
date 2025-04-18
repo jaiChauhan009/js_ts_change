@@ -1,0 +1,118 @@
+{
+  "buildInfo": {
+    "rustc": {
+      "version": "1.63.0-nightly",
+      "commitHash": "e6a4afc3af2d2a53f91fc8a77bdfe94bea375b29",
+      "commitDate": "2022-05-20",
+      "channel": "Nightly",
+      "short": "rustc 1.63.0-nightly (e6a4afc3a 2022-05-20)"
+    },
+    "contractCrate": {
+      "name": "wrewa-swap",
+      "version": "0.0.0"
+    },
+    "framework": {
+      "name": "numbat-wasm",
+      "version": "0.34.1"
+    }
+  },
+  "name": "RewaDcdtSwap",
+  "constructor": {
+    "inputs": [
+      {
+        "name": "wrapped_rewa_token_id",
+        "type": "TokenIdentifier"
+      }
+    ],
+    "outputs": []
+  },
+  "endpoints": [
+    {
+      "name": "wrapRewa",
+      "mutability": "mutable",
+      "payableInTokens": [
+        "REWA"
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "DcdtTokenPayment"
+        }
+      ]
+    },
+    {
+      "name": "unwrapRewa",
+      "mutability": "mutable",
+      "payableInTokens": [
+        "*"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "getLockedRewaBalance",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "BigUint"
+        }
+      ]
+    },
+    {
+      "name": "getWrappedRewaTokenId",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "TokenIdentifier"
+        }
+      ]
+    },
+    {
+      "name": "isPaused",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "pause",
+      "onlyOwner": true,
+      "mutability": "mutable",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "unpause",
+      "onlyOwner": true,
+      "mutability": "mutable",
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "events": [],
+  "hasCallback": false,
+  "types": {
+    "DcdtTokenPayment": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "token_identifier",
+          "type": "TokenIdentifier"
+        },
+        {
+          "name": "token_nonce",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "BigUint"
+        }
+      ]
+    }
+  }
+}
